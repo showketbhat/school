@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	</head>
+	<style>
+
+		.red {
+			background-color: #E74C3C;
+			border-bottom: 5px solid #BD3E31;
+			text-shadow: 0px -2px #BD3E31;
+		}
+		
+		.animate
+		{
+			transition: all 0.1s;
+			-webkit-transition: all 0.1s;
+		}
+
+		.action-button
+		{
+			position: relative;
+			padding: 3px 45px;
+			margin: 4px 16px 12px 9px;
+			border-radius: 3px;
+			font-family: monospace;
+			font-size: 18px;
+			color: #FFF;
+			text-decoration: none;
+			cursor: pointer;
+		}
+
+		.action-button:active
+		{
+			transform: translate(0px,5px);
+			-webkit-transform: translate(0px,5px);
+			border-bottom: 1px solid;
+		}
+
+		#info {
+			background: #B1D8B1;
+			padding: 14px;
+			margin: 10px;
+			border-radius: 12px;
+			font-family: initial;
+		}
+		
+		.album{
+			margin: 10px;
+		}
+		
+		.styling{
+			width: 150px;
+			height: 23px;
+			border-radius: 4px;
+			border: 1px solid #E74C3C;
+		}
+		
+		.label-styling{
+			color: blue;
+			font-family: monospace;
+			padding-left: 50px;
+		}
+
+	</style>
+	<body>
+
+		<form name="albumSubscription" method="post" action="" >
+			
+			<table style="padding-left: 156px; padding-top: 10px;" >
+				<tr>
+					<td>
+						<label class="label-styling"> Select Width </label>
+						<input type="text" name="width" id="width" class="styling"/>
+					</td>
+					<td>
+						<label class="label-styling"> Select Diagram </label>
+						
+						<select name="diagram" id="diagram" class="styling" style="height: 28px;">
+							<option value="Circle">Circle</option>
+							<option value="Rectangle">Rectangle</option>
+							<option value="Square">Square</option>
+							<option value="Polygon">Polygon</option>
+							<option value="Triangle">Triangle</option>
+						</select>
+						
+					</td>
+					<td>
+						<label class="label-styling"> Select Color </label>
+						<input id="color" type="color" name="favcolor"  class="styling">
+					</td>
+				</tr>
+			</table>
+			<br>
+			<div align="center" class="action-button shadow animate red" onclick="formSubmission();">Generate Diagram</div>
+			<br>
+			<canvas align="center" id="myCanvas" width="1200" height="500" style="border: 2px solid #E74C3C; border-radius: 10px; margin-left: 57px;"></canvas>
+			
+			
+			
+			
+		</form>
+	<script>
+	
+	$( document ).ready(function() {
+		
+	});
+	
+	function formSubmission(){
+		var diagramName = $("#diagram option").filter(":selected").val();
+		var width		= $("#width").val();
+		var color		= $("#color").val();
+		
+		switch(diagramName) {
+			case 'Circle':
+				createCircle(width, color);
+				break;
+			case 'Square':
+				createSquare(width, color);
+				break;
+			case 'Rectangle':
+				createRectangle(width, color);
+				break;
+			case 'Triangle':
+				createTriangle(width, color);
+				break;
+			case 'Polygon':
+				createPolygon(width, color);
+				break;
+			
+		}
+
+	}
+	
+	function createCircle(radious, color){
+		
+		var c=document.getElementById("myCanvas");
+		var ctx=c.getContext("2d");
+		clearCanvas(ctx, c);
+		ctx.fillStyle = color;
+		ctx.beginPath();
+		ctx.arc(600,250,radious,0,2*Math.PI);
+		ctx.closePath();
+		ctx.fill();
+		
+	}
+	function createSquare(width, color){
+		var c=document.getElementById("myCanvas");
+		var ctx=c.getContext("2d");
+		clearCanvas(ctx, c);
+		ctx.fillStyle = color;
+		ctx.beginPath();
+		ctx.fillRect(500,150, width, width);
+		ctx.closePath();
+		ctx.fill();
+		
+	}
+	function createRectangle(width, color){
+		var c=document.getElementById("myCanvas");
+		var ctx=c.getContext("2d");
+		clearCanvas(ctx, c);
+		ctx.fillStyle = color;
+		ctx.beginPath();
+		ctx.fillRect(500,150, width, width/2);
+		ctx.closePath();
+		ctx.fill();
+	}
+	
+	function createTriangle(width, color){
+		var c=document.getElementById("myCanvas");
+		var ctx=c.getContext("2d");
+		clearCanvas(ctx, c);
+		ctx.fillStyle = color;
+		ctx.beginPath();
+		ctx.moveTo(500,width);
+		ctx.lineTo(600,10);
+		ctx.lineTo(700,width);
+		ctx.closePath();
+		ctx.fill();
+	}
+	
+	function createPolygon(width, color){
+		var c=document.getElementById("myCanvas");
+		var ctx=c.getContext("2d");
+		clearCanvas(ctx, c);
+		ctx.fillStyle = color;
+		ctx.beginPath();
+		ctx.moveTo(750, 160);
+		ctx.lineTo(500, 250);
+		ctx.lineTo(250, 400);
+		ctx.lineTo(460, 450);
+		ctx.closePath();
+		ctx.fill();
+	}
+	
+	function clearCanvas(context, canvas) {
+	  context.clearRect(0, 0, canvas.width, canvas.height);
+	  var w = canvas.width;
+	  canvas.width = 1;
+	  canvas.width = w;
+	}
+	
+	</script>
+		 
+	</body>
+</html> 
